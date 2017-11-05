@@ -83,5 +83,5 @@
         android:id="@+id/add_fromcontact_btn"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:background="@drawable/add_btn_selector_securityphone"/>
+        android:background="@drawable/add_fromcontact_btn_selector_securityphone"/>
 </LinearLayout>
