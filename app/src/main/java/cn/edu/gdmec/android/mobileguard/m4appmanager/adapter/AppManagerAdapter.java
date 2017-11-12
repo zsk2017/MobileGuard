@@ -175,7 +175,7 @@ public class AppManagerAdapter extends BaseAdapter{
                     Log.d("", "onClick:================= ");
                     break;
                 case R.id.tv_about_app:
-                    EngineUtils.AboutApp(context,appInfo);
+                    EngineUtils.AboutAppbutton(context,appInfo);
                     break;
                 case R.id.tv_uninstall_app:
                     if (appInfo.packageName.equals(context.getPackageName())){
