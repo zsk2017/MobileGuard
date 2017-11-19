@@ -24,6 +24,8 @@ import cn.edu.gdmec.android.mobileguard.m2theftguard.receiver.MyDeviceAdminRecei
 import cn.edu.gdmec.android.mobileguard.m2theftguard.utils.MD5Utils;
 import cn.edu.gdmec.android.mobileguard.m3communicationguard.SecurityPhoneActivity;
 import cn.edu.gdmec.android.mobileguard.m4appmanager.AppManagerActivity;
+import cn.edu.gdmec.android.mobileguard.m5virusscan.VirusScanActivity;
+import cn.edu.gdmec.android.mobileguard.m5virusscan.VirusScanSpeedActivity;
 
 public class HomeActivity extends AppCompatActivity {
     private GridView gv_home;
@@ -61,6 +63,10 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                     case 2:
                         startActivity(AppManagerActivity.class);
+                        break;
+                    case 3:
+                        startActivity(VirusScanActivity.class);
+                        break;
                 }
             }
         });
@@ -205,8 +211,4 @@ public class HomeActivity extends AppCompatActivity {
         }
         return true;
     }
-
-
-
-
 }
