@@ -59,7 +59,7 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
                 mRecomandTV.setText("正在扫描："+info.packageName);
                 mCanCleanTV.setText("已扫描缓存："+ Formatter.formatFileSize(CacheClearListActivity.this,cacheMemory));
                 mCacheInfos.clear();
-                mCacheInfos.addAll(mCacheInfos);
+                mCacheInfos.addAll(cacheInfos);
                 adapter.notifyDataSetChanged();
                 mCacheLV.setSelection(mCacheInfos.size());
                 break;
@@ -130,7 +130,7 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
     public  void getCacheSize(PackageInfo info){
         try {
             Method method = PackageManager.class.getDeclaredMethod(
-                    "getPackageInfo", String.class, IPackageStatsObserver.class);
+                    "getPackageSizeInfo", String.class, IPackageStatsObserver.class);
             method.invoke(pm, info.packageName, new MyPackObsever(info));
         } catch (Exception e) {
             e.printStackTrace();
@@ -152,7 +152,6 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
              cacheInfo.appIcon = info.applicationInfo.loadIcon(pm);
              cacheInfos.add(cacheInfo);
              cacheMemory += cachesize;
-
          }
         }
     }

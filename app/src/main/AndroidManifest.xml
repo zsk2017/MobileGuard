@@ -102,6 +102,7 @@
         <activity android:name=".m5virusscan.VirusScanActivity" />
         <activity android:name=".m5virusscan.VirusScanSpeedActivity" />
         <activity android:name=".m6cleancache.CacheClearListActivity"/>
+        <activity android:name=".m6cleancache.CleanCacheActivity"/>
 
     </application>
 
