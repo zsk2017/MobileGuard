@@ -1,8 +1,10 @@
 package cn.edu.gdmec.android.mobileguard.m5virusscan;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +31,7 @@ import cn.edu.gdmec.android.mobileguard.m2theftguard.utils.MD5Utils;
 import cn.edu.gdmec.android.mobileguard.m5virusscan.adapter.ScanVirusAdapter;
 import cn.edu.gdmec.android.mobileguard.m5virusscan.dao.AntiVirusDao;
 import cn.edu.gdmec.android.mobileguard.m5virusscan.entity.ScanAppInfo;
+import cn.edu.gdmec.android.mobileguard.m5virusscan.untils.UrlClient;
 
 /**
  * Created by milku on 2017/11/18.
@@ -35,6 +41,7 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
     protected static final int SCAN_BENGIN = 100;
     protected static final int SCANNING = 101;
     protected static final int SCAN_FINISH = 102;
+    protected static final String VIRUSSCANAPI = "http://android2017.duapp.com/cloudvirusscan.php";
     private int total;
     private int process;
 
@@ -77,6 +84,7 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
                     break;
             }
         }
+    };
         private void saveScanTime(){
             SharedPreferences.Editor edit = mSP.edit ();
             SimpleDateFormat sdf = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss", Locale.getDefault () );
@@ -84,7 +92,6 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
             currentTime = "上次查杀："+currentTime;
             edit.putString ( "lastVirusScan", currentTime );
             edit.commit ();
-        };
     };
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -93,9 +100,36 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
         pm = getPackageManager ();
         mSP = getSharedPreferences ( "config", MODE_PRIVATE );
         initView();
-        scanVirus();
+        Intent intent = getIntent();
+        boolean cloudscan = intent.getBooleanExtra("cloud",false);
+        if (cloudscan){
+            cloudScanVirus();
+        }else {
+            scanVirus();
+        }
     }
 
+    private void cloudScanVirus(){
+        flag = true;
+        List<PackageInfo> installedPackages = pm.getInstalledPackages(0);
+        total = installedPackages.size();
+        for (PackageInfo info: installedPackages){
+            String apkpath = info.applicationInfo.sourceDir;
+            String md5info = MD5Utils.getFileMd5(apkpath);
+            System.out.println(info.packageName+":"+md5info);
+            ScanAppInfo scanInfo = new ScanAppInfo();
+            scanInfo.packagename = info.packageName;
+            scanInfo.appName = info.applicationInfo.loadLabel(pm)
+                    .toString();
+            scanInfo.appicon = info.applicationInfo.loadIcon(pm);
+            scanInfo.virusScanUrl = VIRUSSCANAPI;
+            scanInfo.md5info = md5info;
+            scanInfo.isVirus = false;
+            scanInfo.description = "";
+            RestfulTask restfulTask = new RestfulTask();
+            restfulTask.execute(scanInfo);
+        }
+    }
     //扫描病毒 使用线程做耗时任务
     private void scanVirus(){
         flag = true;
@@ -154,6 +188,48 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
                 mHandler.sendMessage(msg);
             };
         }.start ();
+    }
+
+    public class RestfulTask extends AsyncTask<ScanAppInfo,Integer,ScanAppInfo> {
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            mScanAppTV.setText("正在向云查杀服务器提交病毒特征码...");
+        }
+
+        @Override
+        protected ScanAppInfo doInBackground(ScanAppInfo... scanAppInfos) {
+            String apiResult = UrlClient.UrlPost(scanAppInfos[0].virusScanUrl, "{\"md5\":\"" + scanAppInfos[0].md5info + "\"}");
+            try{
+                JSONObject jsonObject = new JSONObject(apiResult);
+                scanAppInfos[0].isVirus = jsonObject.getBoolean("isVirus");
+                scanAppInfos[0].description = jsonObject.getString("description");
+                return scanAppInfos[0];
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(ScanAppInfo scanAppInfo){
+            super.onPostExecute(scanAppInfo);
+            if (!flag){
+                return;
+            }
+            mScanAppTV.setText("云查杀引擎返回:"+scanAppInfo.appName);
+            process++;
+            mProcessTV.setText((process * 100 / total) + "%");
+            mScanAppInfos.add(scanAppInfo);
+            adapter.notifyDataSetChanged();
+            mScanListView.setSelection(mScanAppInfos.size());
+
+            if (process == total){
+                mScanAppTV.setText("扫描完成！");
+                mScanningIcon.clearAnimation();
+                mCancleBtn.setBackgroundResource(R.drawable.scan_complete);
+                saveScanTime();
+            }
+        }
     }
     private void initView() {
         findViewById ( R.id.rl_titlebar ).setBackgroundColor (

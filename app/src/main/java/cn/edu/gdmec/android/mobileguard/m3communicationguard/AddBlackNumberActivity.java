@@ -21,8 +21,8 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
     private CheckBox mTelCB;
     private EditText mNumET;
     private EditText mNameET;
-    private BlackNumberDao dao;
     private EditText mTypeET;
+    private BlackNumberDao dao;
     private void initView(){
         findViewById(R.id.rl_titlebar).setBackgroundColor(getResources().getColor(R.color.bright_purple));
         ((TextView)findViewById(R.id.tv_title)).setText("添加黑名单");
@@ -47,8 +47,10 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
             //获取选中的联系人信息
             String phone = data.getStringExtra("phone");
             String name = data.getStringExtra("name");
+            String type = data.getStringExtra("type");
             mNameET.setText(name);
             mNumET.setText(phone);
+            mTypeET.setText(type);
         }
     }
 
@@ -78,7 +80,7 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
                     BlackContactInfo blackContactInfo = new BlackContactInfo();
                     blackContactInfo.phoneNumber = number;
                     blackContactInfo.contactName = name;
-                    blackContactInfo.type=type;
+                    blackContactInfo.contactType = type;
                     if (mSmsCB.isChecked() & mTelCB.isChecked()){
                         //两种模式都选
                         blackContactInfo.mode=3;

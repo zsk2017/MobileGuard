@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import cn.edu.gdmec.android.mobileguard.App;
 import cn.edu.gdmec.android.mobileguard.R;
 import cn.edu.gdmec.android.mobileguard.m4appmanager.entity.AppInfo;
 import cn.edu.gdmec.android.mobileguard.m4appmanager.utils.DensityUtil;
@@ -104,6 +103,8 @@ public class AppManagerAdapter extends BaseAdapter{
                     findViewById(R.id.tv_share_app);
             viewHolder.mAppAboutTV = (TextView) view.
                     findViewById(R.id.tv_about_app);
+            viewHolder.mAppActivityTV = (TextView) view.
+                    findViewById(R.id.tv_activity_app);
             viewHolder.mUninstallTV = (TextView) view.
                     findViewById(R.id.tv_uninstall_app);
             viewHolder.mAppOptionLL = (LinearLayout) view.
@@ -129,6 +130,7 @@ public class AppManagerAdapter extends BaseAdapter{
         viewHolder.mShareAppTV.setOnClickListener(listener);
         viewHolder.mUninstallTV.setOnClickListener(listener);
         viewHolder.mAppAboutTV.setOnClickListener(listener);
+        viewHolder.mAppActivityTV.setOnClickListener(listener);
         return view;
     }
     private TextView getTextView(){
@@ -151,6 +153,7 @@ public class AppManagerAdapter extends BaseAdapter{
         TextView mAppSizeTV;
         TextView mAppNameTV;
         TextView mAppAboutTV;
+        TextView mAppActivityTV;
         LinearLayout mAppOptionLL;
     }
     class MyClickListener implements View.OnClickListener{
@@ -175,6 +178,9 @@ public class AppManagerAdapter extends BaseAdapter{
                     Log.d("", "onClick:================= ");
                     break;
                 case R.id.tv_about_app:
+                    EngineUtils.AboutAppbutton(context,appInfo);
+                    break;
+                case R.id.tv_activity_app:
                     EngineUtils.AboutAppbutton(context,appInfo);
                     break;
                 case R.id.tv_uninstall_app:

@@ -7,6 +7,7 @@ package cn.edu.gdmec.android.mobileguard.m3communicationguard.entity;
 public class BlackContactInfo {
     public String phoneNumber;
     public String contactName;
+    public String contactType;
     public int mode;
     public String type;
     public  String getModeString(int mode){
@@ -19,5 +20,8 @@ public class BlackContactInfo {
                 return "电话、短信拦截";
         }
          return  "";
+    }
+    public String getContactType(){
+        return contactType;
     }
 }
