@@ -2,19 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
     <ImageView
         android:layout_width="80dp"
-
         android:layout_height="80dp"
-        android:id="@+id/iv_home"
-        android:background="@drawable/atools"/>
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/tv_name"
-    android:text="高级工具"
-    android:textColor="#80000000"
-    android:textSize="18sp"/>
+        android:id="@+id/iv_icon"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_name"
+        android:textColor="#800000"
+        android:textSize="18sp"/>
 </LinearLayout>

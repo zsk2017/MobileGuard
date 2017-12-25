@@ -1,33 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#10000000"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-<View
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:id="@+id/view1"
-    android:layout_centerVertical="true"
-    android:layout_margin="15dp"
-    android:background="@drawable/contact_icon" />
-
+    android:background="#10000000"
+    android:orientation="vertical"
+    >
+    <View
+        android:id="@+id/view1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="15dp"
+        android:background="@drawable/contact_icon"/>
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/tv_name1"
+        style="@style/textview16sp"
         android:layout_alignTop="@id/view1"
         android:layout_toRightOf="@id/view1"
-        android:id="@+id/tv_name"
-        style="@style/textview16sp"
-        android:textColor="@color/purple"/>
+        android:textColor="@color/purple"
+        />
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/tv_phone"
         style="@style/textview14sp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/tv_name"
         android:layout_toRightOf="@id/view1"
-        android:textColor="@color/purple" />
-
-
+        android:layout_below="@id/tv_name1"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/purple"
+        />
 </RelativeLayout>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="cn.edu.gdmec.android.mobileguard">
-    <!--通讯卫士部分-->
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cn.edu.gdmec.android.mobileguard">
+
+    <!-- 通讯卫士部分 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -15,8 +16,12 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
-    <uses-permission android:name="android.permission.CLEAR_APP_CACHE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+    <!--高级工具程序锁部分-->
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermission"/>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -25,19 +30,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity" />
-        <activity android:name=".m1home.HomeActivity">
+        <activity android:name=".SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".m1home.HomeActivity">
+
+        </activity>
         <activity android:name=".m2theftguard.LostFindActivity" />
-        <activity android:name=".m2theftguard.Setup1Activity" />
-        <activity android:name=".m2theftguard.Setup2Activity" />
-        <activity android:name=".m2theftguard.Setup3Activity" />
-        <activity android:name=".m2theftguard.Setup4Activity" />
+        <activity android:name=".m2theftguard.Setup1Activty" />
+        <activity android:name=".m2theftguard.Setup2Activty" />
+        <activity android:name=".m2theftguard.Setup3Activty" />
+        <activity android:name=".m2theftguard.Setup4Activty" />
 
         <receiver
             android:name=".m2theftguard.receiver.BootCompleteReceiver"
@@ -48,7 +55,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".m2theftguard.ContactSelectActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".m2theftguard.ContactSelectActivity" />
 
         <service
             android:name=".m2theftguard.service.GPSLocationService"
@@ -76,34 +83,60 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
-        <!--通讯卫士部分-->
-        <activity android:name=".m3communicationguard.AddBlackNumberActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".m3communicationguard.SecurityPhoneActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <!-- 通讯卫士部分 -->
+        <activity
+            android:name=".m3communicationguard.AddBlackNumberActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".m3communicationguard.SecurityPhoneActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <receiver
             android:name=".m3communicationguard.receiver.InterceptCallReciever"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter android:priority="2147483647">
-                <action android:name="android.intent.action.PHONE_STATE"/>
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
+                <action android:name="android.intent.action.PHONE_STATE" />
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".m3communicationguard.receiver.InterceptSmsReceiver"
+            android:name=".m3communicationguard.receiver.InterceptSmsReciever"
             android:enabled="true"
             android:exported="true">
             <intent-filter android:priority="2147483647">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".m4appmanager.AppManagerActivity"/>
-        <activity android:name=".m5virusscan.VirusScanActivity" />
-        <activity android:name=".m5virusscan.VirusScanSpeedActivity" />
-        <activity android:name=".m6cleancache.CacheClearListActivity"/>
-        <activity android:name=".m6cleancache.CleanCacheActivity"/>
+        <activity
+            android:name=".m4appmanager.AppManagerActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".m5virusscan.VirusScanSpeedActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".m5virusscan.VirusScanActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".m6cleancache.CacheClearListActivity" />
+        <activity android:name=".m6cleancache.CleanCacheActivity" />
 
+        <receiver
+            android:name=".m8trafficmonitor.reciever.BootCompleteReciever"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".m8trafficmonitor.OperatorSetActivity" />
+        <activity android:name=".m8trafficmonitor.TrafficMonitoringActivity"></activity>
+        <!--m9-->
+        <activity android:name=".m9advancedtools.AdvancedToolsActivity"/>
+        <activity android:name=".m9advancedtools.AppLockActivity"/>
+        <activity android:name=".m9advancedtools.EnterPswActivity"/>
+        <activity android:name=".m9advancedtools.NumBelongtoActivity"/>
+        <activity android:name=".m9advancedtools.SMSBackupActivity"/>
+        <activity android:name=".m9advancedtools.SMSReducitionActivity"/>
+        <service android:name=".m9advancedtools.service.AppLockService"
+            android:persistent="true"/>
     </application>
 
 </manifest>

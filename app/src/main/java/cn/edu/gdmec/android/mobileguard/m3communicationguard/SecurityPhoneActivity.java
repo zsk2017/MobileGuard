@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.edu.gdmec.android.mobileguard.R;
-import cn.edu.gdmec.android.mobileguard.m3communicationguard.adapter.BlackContactAdapter;
+import cn.edu.gdmec.android.mobileguard.m3communicationguard.adapter.BlackContactAdapte;
 import cn.edu.gdmec.android.mobileguard.m3communicationguard.db.dao.BlackNumberDao;
 import cn.edu.gdmec.android.mobileguard.m3communicationguard.entity.BlackContactInfo;
 
@@ -27,10 +27,10 @@ public class SecurityPhoneActivity extends AppCompatActivity implements View.OnC
     private BlackNumberDao dao = new BlackNumberDao(SecurityPhoneActivity.this);
     private ListView mListView;
     private int pagenumber = 0;
-    private int pagesize = 20;
+    private int pagesize = 4;
     private int totalNumber;
     private List<BlackContactInfo> pageBlackNumber = new ArrayList<BlackContactInfo>();
-    private BlackContactAdapter adapter;
+    private BlackContactAdapte adapter;
 
     private void fillData() {
 //        dao = new BlackNumberDao(SecurityPhoneActivity.this);
@@ -50,8 +50,8 @@ public class SecurityPhoneActivity extends AppCompatActivity implements View.OnC
             }
             pageBlackNumber.addAll(dao.getPageBlackNumber(pagenumber,pagesize));
             if (adapter == null){
-                adapter = new BlackContactAdapter(pageBlackNumber,SecurityPhoneActivity.this);
-                adapter.setCallBack(new BlackContactAdapter.BlackConactCallBack() {
+                adapter = new BlackContactAdapte(pageBlackNumber,SecurityPhoneActivity.this);
+                adapter.setCallBack(new BlackContactAdapte.BlackConactCallBack() {
                     @Override
                     public void DataSizeChanged() {
                         fillData();

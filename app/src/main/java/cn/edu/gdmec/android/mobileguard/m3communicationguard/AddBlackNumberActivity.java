@@ -32,7 +32,7 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
 
         mSmsCB = (CheckBox) findViewById(R.id.cb_blacknumber_sms);
         mTelCB = (CheckBox) findViewById(R.id.cb_blacknumber_tel);
-        mNumET = (EditText) findViewById(R.id.et_balcknumber);
+        mNumET = (EditText) findViewById(R.id.et_blacknumber);
         mNameET = (EditText) findViewById(R.id.et_blackname);
         mTypeET = (EditText) findViewById(R.id.et_blacktype);
 
@@ -47,10 +47,9 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
             //获取选中的联系人信息
             String phone = data.getStringExtra("phone");
             String name = data.getStringExtra("name");
-            String type = data.getStringExtra("type");
             mNameET.setText(name);
             mNumET.setText(phone);
-            mTypeET.setText(type);
+            mTypeET.setText("骚扰");
         }
     }
 
@@ -72,15 +71,15 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
                 String number = mNumET.getText().toString().trim();
                 String name = mNameET.getText().toString().trim();
                 String type = mTypeET.getText().toString().trim();
-                if (TextUtils.isEmpty(number)||TextUtils.isEmpty(name)){
-                    Toast.makeText(this, "电话号码和手机号码不能为空！", Toast.LENGTH_LONG).show();
+                if (TextUtils.isEmpty(number)||TextUtils.isEmpty(name)||TextUtils.isEmpty(type)){
+                    Toast.makeText(this, "电话号码和手机号码和类型不能为空！", Toast.LENGTH_LONG).show();
                     return;
                 }else {
                     //电话号码和名称都不为空
                     BlackContactInfo blackContactInfo = new BlackContactInfo();
                     blackContactInfo.phoneNumber = number;
                     blackContactInfo.contactName = name;
-                    blackContactInfo.contactType = type;
+                    blackContactInfo.type = type;
                     if (mSmsCB.isChecked() & mTelCB.isChecked()){
                         //两种模式都选
                         blackContactInfo.mode=3;
@@ -101,7 +100,7 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
                         Toast.makeText(this, "该号码已经被添加至黑名单", Toast.LENGTH_SHORT).show();
                     }
                     finish();
-
+                    
                 }
                 break;
             case R.id.add_fromcontact_btn:
