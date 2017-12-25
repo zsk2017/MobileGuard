@@ -24,6 +24,7 @@ public class AdvancedToolsActivity extends Activity implements OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView( R.layout.activity_advanced_tools);
         initView();
+
     }
 
     /**初始化控件*/
