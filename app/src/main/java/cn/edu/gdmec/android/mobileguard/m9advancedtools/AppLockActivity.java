@@ -34,7 +34,6 @@ public class AppLockActivity extends FragmentActivity implements OnClickListener
     private View slideUnLockView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

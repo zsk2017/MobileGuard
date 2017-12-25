@@ -90,7 +90,6 @@ public class NumBelongtoDao {
                     }
                     break;
             }
-
         }
         db.close();
         return location;

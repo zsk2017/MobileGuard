@@ -23,8 +23,6 @@ public class MyCircleProgress extends Button{
     private Paint paint;
     /**进度*/
     private int progress;
-
-
     private int max;
     /**进度为零时，颜色*/
     private int mCircleColor;
